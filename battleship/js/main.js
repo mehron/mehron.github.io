@@ -18,6 +18,10 @@ let currentShipPositionTop = '0px';
 
 let currentShipActive;
 
+let computerLastFireIsHit = false;
+let playerLastHit = false;
+
+
 let occupiedCells = [
     [],
     [],
@@ -1110,11 +1114,16 @@ function shoot() {
         this.classList.add('no-hover');
         this.innerHTML = '<span class="z"></span>';
         this.removeEventListener('click', shoot);
+
+        playerLastHit = false;
+
     } else {
         this.classList.add('hit');
         this.innerHTML = '<span class="x"></span>';
         this.removeEventListener('click', shoot);
         this.classList.add('no-hover');
+
+        playerLastHit = true;
 
         let coordinateX = Number(this.getAttribute('data-x'));
         let coordinateY = Number(this.getAttribute('data-y'));
@@ -1751,10 +1760,15 @@ function shoot() {
         }
 
     }
+
+    if (!playerLastHit) {
+        do {
+            computerFire();
+        } while (computerLastFireIsHit);
+    }
 }
 
 
-let computerLastFireIsHit = false;
 let lastHitCoordinates = {x:0, y:0};
 
 
@@ -2429,6 +2443,8 @@ function computerFire() {
             tableRow.querySelector(selectCol).removeEventListener('click', shoot);
             tableRow.querySelector(selectCol).classList.add('no-hover');
             tableRow.querySelector(selectCol).classList.add('empty');
+
+            computerLastFireIsHit = false;
 
             isShot = false;
         } else {
