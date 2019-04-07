@@ -45,7 +45,7 @@ body {
     display: inline-block;
     height: 500px;
     position: relative;
-    background: url("../images/_grid.jpg") no-repeat center / contain;
+    background: url("../images/grid.jpg") no-repeat center / contain;
 }
 
 #board .ship {
